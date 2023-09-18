@@ -30,9 +30,9 @@ Ensure that you have the following installed:
 
 You can install the required packages using the following command:
 
-```sh
+sh
 pip install scikit-learn xgboost numpy pandas
-```
+
 
 
 ## Usage
