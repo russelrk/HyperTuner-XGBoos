@@ -85,10 +85,18 @@ def fine_tune_grid_search(
         
     # Get the best parameters and estimator
     best_params = grid_search.best_params_
-    best_estimator = grid_search.best_estimator_
-
-    # Get the optimal number of rounds
-    optimal_num_rounds = best_estimator.get_booster().best_ntree_limit
+    cv_result = xgb.cv(
+        best_params,
+        xgb.DMatrix(X_train, label=y_train),
+        num_boost_round=1000,
+        early_stopping_rounds=50,
+        metrics="logloss",
+        stratified=True,
+        seed=42,
+        verbose_eval=False
+    )
+     
+    optimal_num_rounds = cv_result.shape[0]
         
         
     return best_params, optimal_num_rounds
